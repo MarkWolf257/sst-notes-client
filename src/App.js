@@ -9,6 +9,7 @@ import { Auth } from "aws-amplify";
 import { useNavigate } from "react-router-dom";
 import { onError } from "./libs/errorLib";
 import ErrorBoundary from "./components/ErrorBoundary";
+import config from "./config";
 
 function App() {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
@@ -20,6 +21,23 @@ function App() {
   }, []);
 
   async function onLoad() {
+    window.fbAsyncInit = function() {
+      window.FB.init({
+        appId            : config.social.FB,
+        autoLogAppEvents : true,
+        xfbml            : true,
+        version          : 'v17.0'
+      });
+    };
+
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "https://connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+
     try {
       await Auth.currentSession();
       userHasAuthenticated(true);
@@ -54,7 +72,12 @@ function App() {
           <Navbar.Collapse className="justify-content-end">
             <Nav activeKey={window.location.pathname}>
               {isAuthenticated ? (
-                <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+                <>
+                  <LinkContainer to="/settings">
+                    <Nav.Link>Settings</Nav.Link>
+                  </LinkContainer>
+                  <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+                </>
               ) : (
                 <>
                   <LinkContainer to="/signup">

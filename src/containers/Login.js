@@ -6,6 +6,8 @@ import { Auth } from "aws-amplify";
 import { useAppContext } from "../libs/contextLib";
 import { onError } from "../libs/errorLib";
 import { useFormFields } from "../libs/hooksLib";
+import { Link } from "react-router-dom";
+import FacebookButton from "../components/FacebookButton";
 
 export default function Login() {
     const { userHasAuthenticated } = useAppContext();
@@ -33,9 +35,17 @@ export default function Login() {
         }
     }
 
+    function handleFbLogin () {
+        userHasAuthenticated(true);
+    }
+
     return (
         <div className="Login">
             <Form onSubmit={handleSubmit}>
+                <FacebookButton
+                    onLogin={handleFbLogin}
+                />
+                <hr />
                 <Form.Group size="lg" controlId="email">
                     <Form.Label>Email</Form.Label>
                     <Form.Control
@@ -53,6 +63,7 @@ export default function Login() {
                         onChange={handleFieldChange}
                     />
                 </Form.Group>
+                <Link to="/login/reset">Forgot password?</Link>
                 <LoaderButton
                     block
                     size="lg"

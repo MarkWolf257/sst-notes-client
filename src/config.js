@@ -34,6 +34,9 @@ const prod = {
 
 const config = {
     MAX_ATTACHMENT_SIZE: 5000000,
+    social: {
+        FB: "1457402308367075"
+    },
 
     ...(process.env.REACT_APP_STAGE === "prod" ? prod : dev),
 };
