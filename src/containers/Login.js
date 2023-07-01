@@ -42,10 +42,6 @@ export default function Login() {
     return (
         <div className="Login">
             <Form onSubmit={handleSubmit}>
-                <FacebookButton
-                    onLogin={handleFbLogin}
-                />
-                <hr />
                 <Form.Group size="lg" controlId="email">
                     <Form.Label>Email</Form.Label>
                     <Form.Control
@@ -73,6 +69,10 @@ export default function Login() {
                 >
                     Login
                 </LoaderButton>
+                <hr />
+                <FacebookButton
+                    onLogin={handleFbLogin}
+                />
             </Form>
         </div>
     );

@@ -102,10 +102,6 @@ export default function Signup() {
     function renderForm() {
         return (
             <Form onSubmit={handleSubmit}>
-                <FacebookButton
-                    onLogin={handleFbLogin}
-                />
-                <hr />
                 <Form.Group controlId="email" size="lg">
                     <Form.Label>Email</Form.Label>
                     <Form.Control
@@ -141,6 +137,10 @@ export default function Signup() {
                 >
                     Signup
                 </LoaderButton>
+                <hr />
+                <FacebookButton
+                    onLogin={handleFbLogin}
+                />
             </Form>
         );
     }
