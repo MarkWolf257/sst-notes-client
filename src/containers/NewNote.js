@@ -13,6 +13,7 @@ export default function NewNote() {
     const navigate = useNavigate();
     const [content, setContent] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [path, setPath] = useState("");
 
     function validateForm() {
         return content.length > 0;
@@ -20,6 +21,11 @@ export default function NewNote() {
 
     function handleFileChange(event) {
         file.current = event.target.files[0];
+        if (event.target.files.length !== 0 && file.current.type.includes('image')) {
+            setPath(URL.createObjectURL(event.target.files[0]));
+        } else {
+            setPath("");
+        }
     }
 
     async function handleSubmit(event) {
@@ -65,6 +71,7 @@ export default function NewNote() {
                     <Form.Label>Attachment</Form.Label>
                     <Form.Control onChange={handleFileChange} type="file" />
                 </Form.Group>
+                {path && <img src={path} alt="" />}
                 <LoaderButton
                     block
                     type="submit"

@@ -16,6 +16,7 @@ export default function Notes() {
     const [content, setContent] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [path, setPath] = useState("");
 
     useEffect(() => {
         function loadNote() {
@@ -51,6 +52,11 @@ export default function Notes() {
 
     function handleFileChange(event) {
         file.current = event.target.files[0];
+        if (event.target.files.length !== 0 && file.current.type.includes('image')) {
+            setPath(URL.createObjectURL(event.target.files[0]));
+        } else {
+            setPath("");
+        }
     }
 
     function saveNote(note) {
@@ -129,7 +135,8 @@ export default function Notes() {
                         />
                     </Form.Group>
                     <Form.Group controlId="file">
-                        <Form.Label>Attachment</Form.Label>
+                        <img className="attachment" src={note.attachmentURL} alt="" />
+                        <Form.Label className="head">Attachment</Form.Label>
                         {note.attachment && (
                             <p>
                                 <a 
@@ -142,6 +149,7 @@ export default function Notes() {
                             </p>
                         )}
                         <Form.Control onChange={handleFileChange} type="file" />
+                        {path && <img src={path} alt="" />}
                     </Form.Group>
                     <LoaderButton
                         block

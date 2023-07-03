@@ -11,3 +11,11 @@
 .notes h2 {
     font-family: Caladea, serif;
 }
+
+.ListGroup {
+    padding: 100px;
+}
+
+img {
+    width: 50%;
+}

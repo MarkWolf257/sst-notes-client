@@ -3,7 +3,7 @@ import "./Home.css";
 import ListGroup from "react-bootstrap/ListGroup";
 import { useAppContext } from "../libs/contextLib";
 import { onError } from "../libs/errorLib";
-import { API } from "aws-amplify";
+import { API, Storage } from "aws-amplify";
 import { BsPencilSquare } from "react-icons/bs";
 import { LinkContainer } from "react-router-bootstrap";
 import { Link } from "react-router-dom";
@@ -21,6 +21,9 @@ export default function Home() {
 
             try {
                 const notes = await loadNotes();
+                for (let note of notes) {
+                    if (note.attachment) note.attachmentURL = await Storage.vault.get(note.attachment);
+                }
                 setNotes(notes);
             } catch (e) {
                 onError(e);
@@ -45,7 +48,7 @@ export default function Home() {
                         <span className="ml-2 font-weight-bold">Create a new note</span>
                     </ListGroup.Item>
                 </LinkContainer>
-                {notes.map(({ noteId, content, createdAt }) => (
+                {notes.map(({ noteId, content, createdAt, attachment, attachmentURL }) => (
                     <LinkContainer key={noteId} to={`/notes/${noteId}`}>
                         <ListGroup.Item action>
                             <span className="font-weight-bold">
@@ -55,6 +58,10 @@ export default function Home() {
                             <span className="text-muted">
                                 Created: {new Date(createdAt).toLocaleString()}
                             </span>
+                            <br />
+                            {attachment && <span className="text-muted">Attachment: {attachment}</span>}
+                            <br />
+                            {attachmentURL && <img src={attachmentURL} alt="" />}
                         </ListGroup.Item>
                     </LinkContainer>
                 ))}

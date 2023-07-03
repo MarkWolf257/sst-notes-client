@@ -2,3 +2,9 @@
     height: 300px;
     font-size: 1.5rem;
 }
+
+.attachment {
+    width: 50%;
+    margin: 30px 0;
+    display: block;
+}
