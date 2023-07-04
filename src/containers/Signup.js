@@ -137,7 +137,7 @@ export default function Signup() {
                 >
                     Signup
                 </LoaderButton>
-                <hr />
+                <hr className="mt-4 mb-4" />
                 <FacebookButton
                     onLogin={handleFbLogin}
                 />

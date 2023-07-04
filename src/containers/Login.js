@@ -69,7 +69,7 @@ export default function Login() {
                 >
                     Login
                 </LoaderButton>
-                <hr />
+                <hr className="mt-4 mb-4" />
                 <FacebookButton
                     onLogin={handleFbLogin}
                 />
